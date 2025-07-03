@@ -49,10 +49,18 @@ public class CSDNPort implements ICSDNPort {
         if (response.isSuccessful()) {
             ArticleResponseDTO articleResponseDTO = response.body();
             if (null == articleResponseDTO) return null;
+            ArticleResponseDTO.ArticleData articleData = articleResponseDTO.getData();
 
             ArticleFunctionResponse articleFunctionResponse = new ArticleFunctionResponse();
             articleFunctionResponse.setCode(articleResponseDTO.getCode());
             articleFunctionResponse.setMsg(articleResponseDTO.getMsg());
+            articleFunctionResponse.setArticleData(ArticleFunctionResponse.ArticleData.builder()
+                    .url(articleData.getUrl())
+                    .id(articleData.getId())
+                    .qrcode(articleData.getQrcode())
+                    .title(articleData.getTitle())
+                    .description(articleData.getDescription())
+                    .build());
 
             return articleFunctionResponse;
         }
